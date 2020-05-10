@@ -23,13 +23,13 @@ class CreateTransactionService {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
     const createCategory = new CreateCategoryService();
 
-    const { id } = await createCategory.execute(category);
+    const transactionCategory = await createCategory.execute(category);
 
     const transaction = transactionsRepository.create({
       title,
       value,
       type,
-      category_id: id,
+      category: transactionCategory,
     });
 
     await transactionsRepository.save(transaction);

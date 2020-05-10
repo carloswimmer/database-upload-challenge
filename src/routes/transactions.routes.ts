@@ -11,9 +11,11 @@ const transactionsRouter = Router();
 
 transactionsRouter.get('/', async (request, response) => {
   const transactionsRepository = getCustomRepository(TransactionsRepository);
-
   const [transactions, balance] = await Promise.all([
-    transactionsRepository.find(),
+    transactionsRepository.find({
+      select: ['id', 'title', 'value', 'type', 'created_at', 'updated_at'],
+      relations: ['category'],
+    }),
     transactionsRepository.getBalance(),
   ]);
 
