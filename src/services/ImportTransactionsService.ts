@@ -19,6 +19,8 @@ class ImportTransactionsService {
 
     const parsers = csvParse({
       from_line: 2,
+      relax: true,
+      relax_column_count: true,
     });
 
     const parseCSV = readStream.pipe(parsers);
