@@ -16,7 +16,6 @@ transactionsRouter.get('/', async (request, response) => {
   const transactionsRepository = getCustomRepository(TransactionsRepository);
   const [transactions, balance] = await Promise.all([
     transactionsRepository.find({
-      select: ['id', 'title', 'value', 'type', 'created_at', 'updated_at'],
       relations: ['category'],
     }),
     transactionsRepository.getBalance(),
@@ -49,7 +48,7 @@ transactionsRouter.delete('/:id', async (request, response) => {
 
   await deleteTransaction.execute(id);
 
-  return response.status(201).json();
+  return response.status(204).json();
 });
 
 transactionsRouter.post(
